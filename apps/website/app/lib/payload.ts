@@ -591,6 +591,8 @@ export interface InstituteInfo {
   address: string;
   email: string;
   tel: string;
+  latitude: number | null;
+  longitude: number | null;
 }
 
 export async function getInstitute(opts?: FetchOpts): Promise<InstituteInfo | null> {
@@ -606,6 +608,8 @@ export async function getInstitute(opts?: FetchOpts): Promise<InstituteInfo | nu
       address: data.address ?? '',
       email: data.email ?? '',
       tel: data.tel ?? '',
+      latitude: data.latitude ?? null,
+      longitude: data.longitude ?? null,
     };
   } catch {
     return null;

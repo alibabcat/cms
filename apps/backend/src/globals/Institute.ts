@@ -6,8 +6,8 @@ export const Institute: GlobalConfig = {
     read: () => true,
   },
   label: {
-    en: 'Institute',
-    fa: 'موسسه',
+    en: 'Institute Settings',
+    fa: 'تنظیمات موسسه',
   },
   fields: [
     {
@@ -49,6 +49,45 @@ export const Institute: GlobalConfig = {
         en: 'Address',
         fa: 'آدرس',
       },
+    },
+    {
+      type: 'row',
+      fields: [
+        {
+          name: 'latitude',
+          type: 'number',
+          required: false,
+          admin: {
+            width: '50%',
+            step: 0.000001,
+            description: {
+              en: 'Map latitude, e.g. 35.759 (used for the OpenStreetMap on the contact page).',
+              fa: 'عرض جغرافیایی نقشه، مثلا ۳۵.۷۵۹ (برای نمایش نقشه در صفحه تماس).',
+            },
+          },
+          label: {
+            en: 'Latitude',
+            fa: 'عرض جغرافیایی',
+          },
+        },
+        {
+          name: 'longitude',
+          type: 'number',
+          required: false,
+          admin: {
+            width: '50%',
+            step: 0.000001,
+            description: {
+              en: 'Map longitude, e.g. 51.421.',
+              fa: 'طول جغرافیایی نقشه، مثلا ۵۱.۴۲۱.',
+            },
+          },
+          label: {
+            en: 'Longitude',
+            fa: 'طول جغرافیایی',
+          },
+        },
+      ],
     },
     {
       name: 'email',

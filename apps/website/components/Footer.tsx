@@ -84,7 +84,7 @@ const Footer = async () => {
                 {footerNav.quickLinks.map((link) => (
                   <li key={link.id}>
                       <Link href={getRoute(link.id, locale)} className="text-muted hover:text-primary-500 hover:ps-2 transition-all flex items-center gap-1 w-full text-start">
-                          <ChevronLeft className="w-3 h-3" />
+                          <ChevronLeft className="w-3 h-3 ltr:-scale-x-100" />
                           {link.label}
                       </Link>
                   </li>
@@ -102,7 +102,7 @@ const Footer = async () => {
                 {footerNav.services.map((link) => (
                   <li key={link.id}>
                       <Link href={getRoute(link.id, locale)} className="text-muted hover:text-foreground hover:ps-2 transition-all flex items-center gap-1 w-full text-start">
-                           <ChevronLeft className="w-3 h-3" />
+                           <ChevronLeft className="w-3 h-3 ltr:-scale-x-100" />
                           {link.label}
                       </Link>
                   </li>

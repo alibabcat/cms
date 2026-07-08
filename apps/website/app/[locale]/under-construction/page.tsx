@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { getServerLocale } from '@/lib/locale'
 import { buildAlternates } from '@/lib/i18n'
 import UnderConstruction from '@/components/UnderConstruction'
+import { HideChrome } from '@/components/ChromeVisibility'
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getServerLocale()
@@ -14,5 +15,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function UnderConstructionPage() {
   const locale = await getServerLocale()
-  return <UnderConstruction locale={locale} />
+  return (
+    <>
+      <HideChrome />
+      <UnderConstruction locale={locale} />
+    </>
+  )
 }

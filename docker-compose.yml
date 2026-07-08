@@ -6,9 +6,6 @@ services:
       args:
         NPM_REGISTRY: https://package-mirror.liara.ir/repository/npm/
     restart: unless-stopped
-    env_file:
-      - .env
-      - apps/backend/.env
     environment:
       PORT: ${BACKEND_PORT:-3000}
       # Override the host-only value from apps/backend/.env so the backend can reach Mongo on the docker network.
@@ -23,9 +20,6 @@ services:
       args:
         NPM_REGISTRY: https://package-mirror.liara.ir/repository/npm/
     restart: unless-stopped
-    env_file:
-      - .env
-      - apps/website/.env
     environment:
       PORT: ${WEBSITE_PORT:-3000}
     depends_on:

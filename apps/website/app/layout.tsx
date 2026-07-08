@@ -8,11 +8,11 @@ import { LanguageProvider } from '../components/LanguageContext'
 import { resolveLocale, dirForLocale } from './lib/locale'
 import { getNavItems } from './lib/payload'
 import { SITE_ORIGIN } from './lib/i18n'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
-import AIChat from '../components/AIChat'
 import GoogleAnalytics from '../components/GoogleAnalytics'
 import RouteLoadingBar from '../components/RouteLoadingBar'
+import Footer from '../components/Footer'
+import { ChromeVisibilityProvider } from '../components/ChromeVisibility'
+import SiteChrome from '../components/SiteChrome'
 
 const SITE_META = {
   fa: {
@@ -62,12 +62,13 @@ export default async function RootLayout({
         <ThemeProvider>
           <CalendarProvider>
             <LanguageProvider initialLocale={locale}>
-              <div className="min-h-screen bg-background flex flex-col font-sans overflow-x-hidden transition-colors duration-300">
-                <Header navItems={navItems} />
-                <main className="flex-grow">{children}</main>
-                <Footer />
-                <AIChat />
-              </div>
+              <ChromeVisibilityProvider>
+                <div className="min-h-screen bg-background flex flex-col font-sans overflow-x-hidden transition-colors duration-300">
+                  <SiteChrome navItems={navItems} footer={<Footer />}>
+                    {children}
+                  </SiteChrome>
+                </div>
+              </ChromeVisibilityProvider>
             </LanguageProvider>
           </CalendarProvider>
         </ThemeProvider>
