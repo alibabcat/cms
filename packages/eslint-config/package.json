@@ -1,0 +1,13 @@
+{
+  "name": "@kiawosch/eslint-config",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "exports": {
+    "./next": "./next.js",
+    "./base": "./base.js"
+  },
+  "peerDependencies": {
+    "eslint": ">=9"
+  }
+}

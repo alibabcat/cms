@@ -1,0 +1,40 @@
+{
+  "name": "@kiawosch/website",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --port 5001",
+    "build": "next build",
+    "codemap": "mkdir -p .codemap && run-s codemap:txt codemap:mmd",
+    "codemap:txt": "depcruise app components services middleware.ts --config ../../.dependency-cruiser.cjs --ts-config tsconfig.codemap.json --output-type text --output-to .codemap/website.txt",
+    "codemap:mmd": "depcruise app components services middleware.ts --config ../../.dependency-cruiser.cjs --ts-config tsconfig.codemap.json --output-type mermaid --output-to .codemap/website.mmd",
+    "start": "next start --port 5001",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@google/genai": "^1.32.0",
+    "@payloadcms/live-preview-react": "3.84.1",
+    "@payloadcms/sdk": "3.84.1",
+    "@radix-ui/react-select": "^2.2.6",
+    "@radix-ui/react-slot": "^1.2.4",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.559.0",
+    "next": "^16.2.6",
+    "payload": "3.84.1",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
+    "tailwind-merge": "^3.6.0"
+  },
+  "devDependencies": {
+    "@kiawosch/typescript-config": "workspace:*",
+    "@types/node": "^22.14.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.14",
+    "typescript": "~5.8.2"
+  }
+}

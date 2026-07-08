@@ -1,0 +1,49 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
+      args:
+        NPM_REGISTRY: https://package-mirror.liara.ir/repository/npm/
+    restart: unless-stopped
+    env_file:
+      - .env
+      - apps/backend/.env
+    environment:
+      PORT: ${BACKEND_PORT:-3000}
+      # Override the host-only value from apps/backend/.env so the backend can reach Mongo on the docker network.
+      DATABASE_URL: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo/kcms?authSource=admin
+    depends_on:
+      - mongo
+
+  website:
+    build:
+      context: .
+      dockerfile: apps/website/Dockerfile
+      args:
+        NPM_REGISTRY: https://package-mirror.liara.ir/repository/npm/
+    restart: unless-stopped
+    env_file:
+      - .env
+      - apps/website/.env
+    environment:
+      PORT: ${WEBSITE_PORT:-3000}
+    depends_on:
+      - backend
+
+  # Ensure your DATABASE_URL uses 'mongo' as the hostname ie. mongodb://mongo/my-db-name
+  mongo:
+    image: docker.arvancloud.ir/library/mongo:latest
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - data:/data/db
+    logging:
+      driver: none
+
+volumes:
+  data:

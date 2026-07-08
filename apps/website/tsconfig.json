@@ -1,0 +1,25 @@
+{
+  "extends": "@kiawosch/typescript-config/nextjs.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@/*": ["./*"],
+      "@/components/*": ["./components/*"],
+      "@/constants": ["./constants"],
+      "@/types": ["./types"],
+      "@/services/*": ["./services/*"],
+      "@/lib/*": ["./app/lib/*"],
+      "@payload-types": ["../backend/src/payload-types"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "../backend/src/payload-types.ts",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
+  ],
+  "exclude": ["node_modules", "index.tsx"]
+}

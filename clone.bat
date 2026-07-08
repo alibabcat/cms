@@ -1,0 +1,1 @@
+rclone copy -P --exclude "**/node_modules/**" --exclude "**/.next/**"  C:\Users\Lambdaxyzt\Downloads\Project-Main\kiawosch\cms aeza1:/var/repo/kcms
