@@ -25,6 +25,9 @@ export async function seedInstitute({ payload }: SeedContext): Promise<void> {
         address: INSTITUTE_ADDRESS,
         email: INSTITUTE_EMAIL,
         tel: INSTITUTE_TEL,
+        // Jordan (Nelson Mandela Blvd), Tehran — non-localized, so set here only.
+        latitude: 35.7719,
+        longitude: 51.4185,
       },
     })
     await payload.updateGlobal({

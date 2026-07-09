@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Mail, Phone, MapPin, MessageCircle, CheckCircle2, ChevronRight, Loader2, Timer, ArrowRight } from 'lucide-react';
+import { Mail, Phone, MapPin, MessageCircle, CheckCircle2, ChevronRight, Loader2, Timer, ArrowRight, Navigation, ExternalLink } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -94,6 +94,9 @@ const TEXT = {
     officeAddress: 'آدرس دفتر مرکزی',
     consultationPhone: 'تلفن مشاوره',
     supportEmail: 'ایمیل پشتیبانی',
+    mapTitle: 'موقعیت روی نقشه',
+    viewLargerMap: 'مشاهده نقشه بزرگ‌تر',
+    getDirections: 'مسیریابی',
     defaultAddress: 'تهران، جردن، خیابان پدیدار، پلاک ۲۰',
     defaultPhone: '021 - 88 88 20 20',
     defaultEmail: 'support@kiawosch.co',
@@ -138,6 +141,9 @@ const TEXT = {
     officeAddress: 'Head office address',
     consultationPhone: 'Consultation phone',
     supportEmail: 'Support email',
+    mapTitle: 'Location on the map',
+    viewLargerMap: 'View a larger map',
+    getDirections: 'Get directions',
     defaultAddress: 'Tehran, Jordan St., Padidar Alley, No. 20',
     defaultPhone: '021 - 88 88 20 20',
     defaultEmail: 'support@kiawosch.co',
@@ -158,6 +164,22 @@ const ContactClient: React.FC<ContactClientProps> = ({ institute }) => {
   const text = TEXT[locale];
   const provinces = PROVINCES[locale];
   const questions = QUESTIONS[locale];
+
+  // OpenStreetMap embed — only shown when the Institute global has coordinates.
+  const lat = institute?.latitude ?? null;
+  const lon = institute?.longitude ?? null;
+  const hasMap = lat !== null && lon !== null;
+  const zoom = institute?.mapZoom ?? 16;
+  const d = 180 / Math.pow(2, zoom); // bbox half-size (deg), derived from the CMS zoom level
+  const mapEmbedSrc = hasMap
+    ? `https://www.openstreetmap.org/export/embed.html?bbox=${lon! - d}%2C${lat! - d}%2C${lon! + d}%2C${lat! + d}&layer=mapnik&marker=${lat}%2C${lon}`
+    : '';
+  const mapLargeHref = hasMap
+    ? `https://www.google.com/maps?q=${lat},${lon}&z=${zoom}`
+    : '';
+  const mapDirectionsHref = hasMap
+    ? `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`
+    : '';
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', province: '', requestType: 'course-consultation', description: '', goal: '', level: '', timeSpent: '', challenge: '', status: '', intent: '', mentorship: '', timeline: '' });
@@ -430,6 +452,38 @@ const ContactClient: React.FC<ContactClientProps> = ({ institute }) => {
                 </div>
             </div>
         </div>
+
+        {/* Location map (OpenStreetMap) — rendered only when coordinates are set */}
+        {hasMap && (
+            <div className="mt-8 bg-surface rounded-3xl border border-border shadow-xl overflow-hidden">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-6 border-b border-border">
+                    <div className="flex items-center gap-3">
+                        <div className="bg-primary-500/10 p-3 rounded-xl text-primary-500"><MapPin className="w-6 h-6" /></div>
+                        <div>
+                            <h3 className="text-lg font-bold text-foreground">{text.mapTitle}</h3>
+                            {(institute?.address) && <p className="text-muted text-sm mt-0.5">{institute.address}</p>}
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                        <a href={mapDirectionsHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-primary-500/10 text-primary-500 hover:bg-primary-500 hover:text-black transition-colors font-bold text-sm px-4 py-2 rounded-xl">
+                            <Navigation className="w-4 h-4" />
+                            {text.getDirections}
+                        </a>
+                        <a href={mapLargeHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-muted hover:text-foreground transition-colors font-medium text-sm px-3 py-2 rounded-xl">
+                            <ExternalLink className="w-4 h-4" />
+                            <span className="hidden sm:inline">{text.viewLargerMap}</span>
+                        </a>
+                    </div>
+                </div>
+                <iframe
+                    title={text.mapTitle}
+                    src={mapEmbedSrc}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="w-full h-[320px] md:h-[420px] border-0 grayscale-[0.15] contrast-[1.05]"
+                />
+            </div>
+        )}
       </div>
     </div>
   );

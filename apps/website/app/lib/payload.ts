@@ -593,6 +593,7 @@ export interface InstituteInfo {
   tel: string;
   latitude: number | null;
   longitude: number | null;
+  mapZoom: number;
 }
 
 export async function getInstitute(opts?: FetchOpts): Promise<InstituteInfo | null> {
@@ -610,6 +611,7 @@ export async function getInstitute(opts?: FetchOpts): Promise<InstituteInfo | nu
       tel: data.tel ?? '',
       latitude: data.latitude ?? null,
       longitude: data.longitude ?? null,
+      mapZoom: data.mapZoom ?? 16,
     };
   } catch {
     return null;

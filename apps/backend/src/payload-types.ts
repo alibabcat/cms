@@ -1470,6 +1470,18 @@ export interface Institute {
   fullName: string;
   description: string;
   address?: string | null;
+  /**
+   * Map latitude, e.g. 35.759 (used for the OpenStreetMap on the contact page).
+   */
+  latitude?: number | null;
+  /**
+   * Map longitude, e.g. 51.421.
+   */
+  longitude?: number | null;
+  /**
+   * Zoom level for the contact-page map (1 = whole world, 20 = building level). Default 16.
+   */
+  mapZoom?: number | null;
   email?: string | null;
   tel?: string | null;
   updatedAt?: string | null;
@@ -1720,6 +1732,9 @@ export interface InstituteSelect<T extends boolean = true> {
   fullName?: T;
   description?: T;
   address?: T;
+  latitude?: T;
+  longitude?: T;
+  mapZoom?: T;
   email?: T;
   tel?: T;
   updatedAt?: T;

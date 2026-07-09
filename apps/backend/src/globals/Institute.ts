@@ -90,6 +90,25 @@ export const Institute: GlobalConfig = {
       ],
     },
     {
+      name: 'mapZoom',
+      type: 'number',
+      required: false,
+      defaultValue: 16,
+      min: 1,
+      max: 20,
+      admin: {
+        step: 1,
+        description: {
+          en: 'Zoom level for the contact-page map (1 = whole world, 20 = building level). Default 16.',
+          fa: 'سطح زوم نقشه در صفحه تماس (۱ = کل جهان، ۲۰ = سطح ساختمان). پیش‌فرض ۱۶.',
+        },
+      },
+      label: {
+        en: 'Map Zoom Level',
+        fa: 'سطح زوم نقشه',
+      },
+    },
+    {
       name: 'email',
       type: 'text',
       required: false,
