@@ -14,16 +14,24 @@ import { usePathname } from 'next/navigation'
  * boundary / opts pages out of static rendering, which this global,
  * layout-mounted component should never do.
  */
+/** Path comparison ignoring a trailing slash, so '/fa/blog/' === '/fa/blog'. */
+const normalizePath = (path: string) => (path.length > 1 ? path.replace(/\/+$/, '') : path)
+
+/** Hard ceiling on how long the bar may run if a navigation never lands. */
+const FAILSAFE_MS = 10_000
+
 const RouteLoadingBar: React.FC = () => {
   const pathname = usePathname()
   const [progress, setProgress] = useState(0)
   const [visible, setVisible] = useState(false)
   const trickleRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const failsafeRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const clearTimers = () => {
     if (trickleRef.current) clearInterval(trickleRef.current)
     if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current)
+    if (failsafeRef.current) clearTimeout(failsafeRef.current)
   }
 
   const start = () => {
@@ -33,6 +41,9 @@ const RouteLoadingBar: React.FC = () => {
     trickleRef.current = setInterval(() => {
       setProgress((prev) => (prev >= 90 ? prev : prev + (90 - prev) * 0.1))
     }, 200)
+    // A navigation that never changes `pathname` would otherwise trickle
+    // forever, since `finish` is only driven by that change.
+    failsafeRef.current = setTimeout(() => finish(), FAILSAFE_MS)
   }
 
   const finish = () => {
@@ -69,8 +80,8 @@ const RouteLoadingBar: React.FC = () => {
       start()
     }
 
-    document.addEventListener('click', onClick)
-    return () => document.removeEventListener('click', onClick)
+    document.addEventListener('click', onClick, true)
+    return () => document.removeEventListener('click', onClick, true)
   }, [])
 
   if (!visible) return null

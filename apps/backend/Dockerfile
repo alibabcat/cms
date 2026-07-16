@@ -1,6 +1,6 @@
 # Build context is the repo root: docker build -f apps/backend/Dockerfile .
 # syntax=docker/dockerfile:1
-ARG NPM_REGISTRY=https://package-mirror.liara.ir/repository/npm/
+ARG NPM_REGISTRY=https://npm.telemex.ir
 
 FROM docker.arvancloud.ir/library/node:22-alpine AS base
 ARG NPM_REGISTRY
