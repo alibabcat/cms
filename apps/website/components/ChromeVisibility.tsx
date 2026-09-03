@@ -7,8 +7,14 @@ const ChromeVisibilityContext = createContext<{
   setHidden: (hidden: boolean) => void
 } | null>(null)
 
-export function ChromeVisibilityProvider({ children }: { children: React.ReactNode }) {
-  const [hidden, setHidden] = useState(false)
+export function ChromeVisibilityProvider({
+  children,
+  initialHidden = false,
+}: {
+  children: React.ReactNode
+  initialHidden?: boolean
+}) {
+  const [hidden, setHidden] = useState(initialHidden)
   return (
     <ChromeVisibilityContext.Provider value={{ hidden, setHidden }}>
       {children}

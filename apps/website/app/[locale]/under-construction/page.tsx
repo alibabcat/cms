@@ -15,10 +15,11 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function UnderConstructionPage() {
   const locale = await getServerLocale()
+  const progress = Number(process.env.UNDER_CONSTRUCTION_PERCENT) || 75
   return (
     <>
       <HideChrome />
-      <UnderConstruction locale={locale} />
+      <UnderConstruction locale={locale} progress={progress} />
     </>
   )
 }

@@ -1,8 +1,7 @@
 import React from 'react'
-import Link from 'next/link'
-import { Construction, ArrowLeft, ArrowRight } from 'lucide-react'
+import { Construction, TrendingUp } from 'lucide-react'
 import type { Locale } from '@/lib/payload'
-import { getRoute } from '@/lib/navigation'
+import { INSTITUTE_NAME } from '@/constants'
 
 const TEXT = {
   fa: {
@@ -11,7 +10,6 @@ const TEXT = {
     subtitle:
       'تیم کیاوش در حال آماده‌سازی این بخش است. لطفاً کمی بعد دوباره سر بزنید.',
     progress: 'پیشرفت پروژه',
-    cta: 'بازگشت به صفحه اصلی',
   },
   en: {
     badge: 'Under Construction',
@@ -19,18 +17,24 @@ const TEXT = {
     subtitle:
       'The Kiawosch team is putting this section together. Please check back a little later.',
     progress: 'Project progress',
-    cta: 'Back to home',
   },
 } as const
 
 /**
  * Placeholder shown for routes whose content is not ready yet. Bilingual and
- * theme-aware; decorative layers and the back arrow flip automatically in RTL
- * via logical rendering. Motion respects `prefers-reduced-motion`.
+ * theme-aware; decorative layers flip automatically in RTL via logical
+ * rendering. Motion respects `prefers-reduced-motion`. The hosting page
+ * should mount <HideChrome /> to hide the header/footer/AIChat.
  */
-export default function UnderConstruction({ locale }: { locale: Locale }) {
+export default function UnderConstruction({
+  locale,
+  progress = 75,
+}: {
+  locale: Locale
+  progress?: number
+}) {
   const t = TEXT[locale]
-  const BackArrow = locale === 'en' ? ArrowLeft : ArrowRight
+  const pct = Math.max(0, Math.min(100, Math.round(progress)))
 
   return (
     <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden px-4 py-24">
@@ -58,6 +62,14 @@ export default function UnderConstruction({ locale }: { locale: Locale }) {
       </div>
 
       <div className="relative w-full max-w-xl text-center flex flex-col items-center gap-8">
+        {/* Brand logo */}
+        <div className="uc-fade-up flex items-center gap-1.5 sm:gap-2 text-primary-500">
+          <TrendingUp className="h-7 w-7 sm:h-8 sm:w-8 shrink-0" />
+          <span className="font-extrabold text-lg sm:text-2xl tracking-tighter text-foreground">
+            {INSTITUTE_NAME}<span className="text-primary-500">.CO</span>
+          </span>
+        </div>
+
         {/* Icon */}
         <div className="relative uc-fade-up">
           <span className="absolute inset-0 rounded-3xl bg-primary-500/30 uc-pulse-ring" />
@@ -90,24 +102,14 @@ export default function UnderConstruction({ locale }: { locale: Locale }) {
         <div className="w-full max-w-xs uc-fade-up space-y-2" style={{ animationDelay: '0.15s' }}>
           <div className="flex items-center justify-between text-xs font-semibold text-muted">
             <span>{t.progress}</span>
-            <span dir="ltr" className="font-mono text-primary-500">75%</span>
+            <span dir="ltr" className="font-mono text-primary-500">{pct}%</span>
           </div>
           <div className="relative h-2 w-full overflow-hidden rounded-full bg-border/60">
-            <div className="relative h-full rounded-full bg-gradient-to-r from-primary-400 to-primary-600" style={{ width: '75%' }}>
+            <div className="relative h-full rounded-full bg-gradient-to-r from-primary-400 to-primary-600" style={{ width: `${pct}%` }}>
               <span className="absolute inset-0 -skew-x-12 bg-white/30 blur-sm w-1/3 uc-shimmer" />
             </div>
           </div>
         </div>
-
-        {/* CTA */}
-        <Link
-          href={getRoute('home', locale)}
-          className="uc-fade-up group inline-flex items-center gap-2 rounded-2xl bg-primary-500 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-primary-500/25 transition-all hover:bg-primary-600 hover:shadow-primary-500/40 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-          style={{ animationDelay: '0.2s' }}
-        >
-          <BackArrow className="w-4 h-4 transition-transform group-hover:-translate-x-0.5 rtl:group-hover:translate-x-0.5" />
-          {t.cta}
-        </Link>
       </div>
     </section>
   )

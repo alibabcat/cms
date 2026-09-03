@@ -53,7 +53,8 @@ export default async function RootLayout({
   // — the only layout allowed to render <html>/<body> — set lang/dir per locale.
   const h = await headers()
   const locale = resolveLocale(h.get('x-locale'))
-  const navItems = await getNavItems({ locale })
+  const hideChrome = h.get('x-hide-chrome') === '1'
+  const navItems = hideChrome ? [] : await getNavItems({ locale })
   return (
     <html lang={locale} dir={dirForLocale(locale)} className="dark">
       <body className="min-h-screen bg-background text-foreground font-sans antialiased selection:bg-primary-500 selection:text-white transition-colors duration-300">
@@ -62,7 +63,7 @@ export default async function RootLayout({
         <ThemeProvider>
           <CalendarProvider>
             <LanguageProvider initialLocale={locale}>
-              <ChromeVisibilityProvider>
+              <ChromeVisibilityProvider initialHidden={hideChrome}>
                 <div className="min-h-screen bg-background flex flex-col font-sans overflow-x-hidden transition-colors duration-300">
                   <SiteChrome navItems={navItems} footer={<Footer />}>
                     {children}
