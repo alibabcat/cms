@@ -9,7 +9,7 @@ export interface CourseAddon {
 
 export interface Course {
   id: string;
-  slug: string;
+  slug?: string;
   title: string;
   description: string;
   instructor: string;
@@ -32,7 +32,7 @@ export interface SyllabusItem {
 
 export interface PsychologyCourse {
   id: string;
-  slug: string;
+  slug?: string;
   title: string;
   price: string;
   basePrice?: number;
@@ -54,7 +54,7 @@ export interface PsychologyCourse {
 
 export interface TeamMember {
   id: number;
-  slug: string;
+  slug?: string;
   name: string;
   role: string;
   image: string;
@@ -221,7 +221,7 @@ export interface HomePageContent {
 
 export interface BlogPost {
   id: string;
-  slug: string;
+  slug?: string;
   title: string;
   excerpt: string;
   image: string;
@@ -240,7 +240,7 @@ export interface BlogPost {
 
 export interface MarketSymbol {
   id: string;
-  slug: string;
+  slug?: string;
   ticker: string; // e.g. XAUUSD
   name: string; // e.g. Gold
   icon: string;
@@ -255,7 +255,7 @@ export interface MarketSymbol {
 
 export interface SignalPackage {
   id: string;
-  slug: string;
+  slug?: string;
   title: string;
   duration: string;
   price: string;
