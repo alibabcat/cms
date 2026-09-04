@@ -28,6 +28,10 @@ FROM base AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=3000
+# Next's standalone server binds to `process.env.HOSTNAME || '0.0.0.0'`, and
+# Docker sets HOSTNAME to the container id — which would bind to that single
+# interface only. Pin it so the server listens on every interface.
+ENV HOSTNAME=0.0.0.0
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
