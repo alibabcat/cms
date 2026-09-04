@@ -22,6 +22,11 @@ services:
     restart: unless-stopped
     environment:
       PORT: ${WEBSITE_PORT:-3000}
+      # Read at request time by the root layout / info page, so these can be
+      # changed by restarting the container — no rebuild needed.
+      UNDER_CONSTRUCTION: ${UNDER_CONSTRUCTION:-false}
+      UNDER_CONSTRUCTION_PERCENT: ${UNDER_CONSTRUCTION_PERCENT:-75}
+      INFO_REDIRECT_URL: ${INFO_REDIRECT_URL:-}
     depends_on:
       - backend
 

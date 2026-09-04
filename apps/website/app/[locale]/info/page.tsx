@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import { getServerLocale } from '@/lib/locale'
-import { SITE_ORIGIN } from '@/lib/i18n'
+import { underConstructionPercent } from '@/lib/under-construction'
 import UnderConstruction from '@/components/UnderConstruction'
 import { HideChrome } from '@/components/ChromeVisibility'
 
@@ -16,7 +16,7 @@ export default async function InfoRedirect() {
     redirect(target)
   }
   const locale = await getServerLocale()
-  const progress = Number(process.env.UNDER_CONSTRUCTION_PERCENT) || 75
+  const progress = underConstructionPercent()
   return (
     <>
       <HideChrome />

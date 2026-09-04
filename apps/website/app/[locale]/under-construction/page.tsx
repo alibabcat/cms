@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { getServerLocale } from '@/lib/locale'
 import { buildAlternates } from '@/lib/i18n'
+import { underConstructionPercent } from '@/lib/under-construction'
 import UnderConstruction from '@/components/UnderConstruction'
 import { HideChrome } from '@/components/ChromeVisibility'
 
@@ -15,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function UnderConstructionPage() {
   const locale = await getServerLocale()
-  const progress = Number(process.env.UNDER_CONSTRUCTION_PERCENT) || 75
+  const progress = underConstructionPercent()
   return (
     <>
       <HideChrome />

@@ -13,6 +13,25 @@ deprecation warning on every dev-server start if one exists. `apps/website/proxy
 is the locale-redirect proxy; edit it in place rather than reintroducing
 `middleware.ts`.
 
+## Never gate on runtime env vars inside `proxy.ts`
+
+Next.js **inlines module-scope `process.env` reads into the proxy/middleware
+bundle at build time**. A var that is absent during `next build` (the Docker
+image builds without a `.env`, since it is git-ignored) is frozen as
+`undefined` forever — setting it on the host at runtime has no effect.
+
+Put such gates in a **server component** instead, which reads `process.env` at
+request time. The under-construction gate works this way: `proxy.ts` only sets
+an `x-pathname` header, and `app/layout.tsx` calls the helpers in
+`app/lib/under-construction.ts` to decide whether to `redirect()`. That makes
+`UNDER_CONSTRUCTION`, `UNDER_CONSTRUCTION_PERCENT`, and `INFO_REDIRECT_URL`
+togglable with a container restart, no rebuild.
+
+Note the standalone runner (`node apps/website/server.js`) does **not** load
+`next.config.ts`, so the root-`.env` loader there only applies to dev/build.
+Production values must be real environment variables (see the `website`
+service in `docker-compose.yml`).
+
 ## Codemap — understanding the dependency graph
 
 Before working on unfamiliar code, or when you need to trace how modules connect

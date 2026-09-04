@@ -1,6 +1,7 @@
 import React from 'react'
 import type { Metadata } from 'next'
 import { headers } from 'next/headers'
+import { redirect } from 'next/navigation'
 import './globals.css'
 import { ThemeProvider } from '../components/ThemeContext'
 import { CalendarProvider } from '../components/CalendarContext'
@@ -8,6 +9,11 @@ import { LanguageProvider } from '../components/LanguageContext'
 import { resolveLocale, dirForLocale } from './lib/locale'
 import { getNavItems } from './lib/payload'
 import { SITE_ORIGIN } from './lib/i18n'
+import {
+  isChromeLess,
+  shouldRedirectToUnderConstruction,
+  underConstructionPath,
+} from './lib/under-construction'
 import GoogleAnalytics from '../components/GoogleAnalytics'
 import RouteLoadingBar from '../components/RouteLoadingBar'
 import Footer from '../components/Footer'
@@ -53,7 +59,14 @@ export default async function RootLayout({
   // — the only layout allowed to render <html>/<body> — set lang/dir per locale.
   const h = await headers()
   const locale = resolveLocale(h.get('x-locale'))
-  const hideChrome = h.get('x-hide-chrome') === '1'
+  const pathname = h.get('x-pathname') ?? '/'
+
+  // Runtime (not build-time) under-construction gate — see lib/under-construction.
+  if (shouldRedirectToUnderConstruction(pathname)) {
+    redirect(underConstructionPath(locale))
+  }
+
+  const hideChrome = isChromeLess(pathname)
   const navItems = hideChrome ? [] : await getNavItems({ locale })
   return (
     <html lang={locale} dir={dirForLocale(locale)} className="dark">
