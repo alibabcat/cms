@@ -1,7 +1,6 @@
 import React from 'react'
 import { notFound } from 'next/navigation'
 import { LOCALES, isLocale } from '../lib/locale'
-import type { Locale } from '../lib/payload'
 
 /** Pre-render both locales so /fa and /en are statically generated. */
 export function generateStaticParams() {
@@ -13,7 +12,9 @@ export default async function LocaleLayout({
   params,
 }: {
   children: React.ReactNode
-  params: Promise<{ locale: Locale }>
+  // A URL segment is only ever `string` here — Next's generated `LayoutProps`
+  // types it that way, and `isLocale` below is what narrows it to `Locale`.
+  params: Promise<{ locale: string }>
 }) {
   // Unknown locale segments 404 here rather than via `dynamicParams = false`,
   // which would also reject the pages below that render dynamically.

@@ -74,8 +74,13 @@ const RouteLoadingBar: React.FC = () => {
 
       const url = new URL(anchor.href, window.location.href)
       if (url.origin !== window.location.origin) return
-      const samePath = url.pathname === window.location.pathname && url.search === window.location.search
-      if (samePath) return
+
+      // The bar is only ever completed by a `pathname` change, so it must only
+      // start when the pathname will actually change. Clicking the route you
+      // are already on — a hash jump, a search-param-only change, or just the
+      // current page's own nav link — would otherwise start a bar that nothing
+      // finishes, leaving it stuck at 90%.
+      if (normalizePath(url.pathname) === normalizePath(window.location.pathname)) return
 
       start()
     }
