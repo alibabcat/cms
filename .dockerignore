@@ -1,0 +1,5 @@
+# Host-installed deps must not overwrite the ones installed inside the image.
+**/node_modules
+**/.next
+**/dist
+.git

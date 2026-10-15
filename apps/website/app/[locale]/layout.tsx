@@ -12,6 +12,8 @@ export default async function LocaleLayout({
   params,
 }: {
   children: React.ReactNode
+  // A URL segment is only ever `string` here — Next's generated `LayoutProps`
+  // types it that way, and `isLocale` below is what narrows it to `Locale`.
   params: Promise<{ locale: string }>
 }) {
   // Unknown locale segments 404 here rather than via `dynamicParams = false`,

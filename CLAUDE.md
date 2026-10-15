@@ -118,3 +118,7 @@ follow them exactly.
   `builder.gc.defaultKeepStorage` ceiling so the cache isn't auto-evicted.
 ## Image conventions
 - `EXPOSE ${PORT}` and read the same `PORT` env in the app.
+
+# Env files
+
+Never edit `.env` or `.env.example` unless explicitly asked. They must stay in sync — same keys, comments, and order — and differ only in their values.
