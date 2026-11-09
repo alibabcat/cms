@@ -6,7 +6,7 @@ export { LOCALES, DEFAULT_LOCALE };
 
 /** Public site origin used for absolute canonical/hreflang URLs. */
 export const SITE_ORIGIN = (
-  process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:5001'
+  process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:4630'
 ).replace(/\/$/, '');
 
 /**

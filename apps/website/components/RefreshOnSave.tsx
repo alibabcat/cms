@@ -3,7 +3,7 @@
 import { RefreshRouteOnSave } from '@payloadcms/live-preview-react'
 import { useRouter } from 'next/navigation'
 
-const PAYLOAD_URL = process.env.NEXT_PUBLIC_PAYLOAD_URL || 'http://localhost:5000'
+const PAYLOAD_URL = process.env.NEXT_PUBLIC_PAYLOAD_URL || 'http://localhost:4631'
 
 /**
  * Mounted on pages rendered inside Payload's Live Preview iframe. It listens for

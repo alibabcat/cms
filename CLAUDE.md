@@ -1,7 +1,7 @@
 # kiawosch-cms
 
 pnpm monorepo (`pnpm@11`). Two Next.js apps under `apps/` — `@kiawosch/backend`
-(Payload CMS, port 5000) and `@kiawosch/website` (port 5001) — plus shared
+(Payload CMS, port 4631) and `@kiawosch/website` (port 4630) — plus shared
 config in `packages/`.
 
 ## Next.js 16: use `proxy.ts`, not `middleware.ts`

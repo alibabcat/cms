@@ -4,12 +4,12 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "next dev --port 5001",
+    "dev": "next dev --port 4630",
     "build": "next build",
     "codemap": "mkdir -p .codemap && run-s codemap:txt codemap:mmd",
     "codemap:txt": "depcruise app components services middleware.ts --config ../../.dependency-cruiser.cjs --ts-config tsconfig.codemap.json --output-type text --output-to .codemap/website.txt",
     "codemap:mmd": "depcruise app components services middleware.ts --config ../../.dependency-cruiser.cjs --ts-config tsconfig.codemap.json --output-type mermaid --output-to .codemap/website.mmd",
-    "start": "next start --port 5001",
+    "start": "next start --port 4630",
     "lint": "next lint"
   },
   "dependencies": {

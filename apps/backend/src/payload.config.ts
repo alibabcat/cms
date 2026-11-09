@@ -34,8 +34,8 @@ import { livePreview, livePreviewCollections, livePreviewGlobals, WEBSITE_URL } 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-// The admin/API origin (this Next.js app). Defaults to the dev port (5000).
-const SERVER_URL = process.env.SERVER_URL || 'http://localhost:5000'
+// The admin/API origin (this Next.js app). Defaults to the dev port (4631).
+const SERVER_URL = process.env.SERVER_URL || 'http://localhost:4631'
 
 export default buildConfig({
   serverURL: SERVER_URL,

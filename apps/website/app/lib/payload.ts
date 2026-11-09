@@ -27,7 +27,7 @@ import {
 } from '@/types';
 import type { SocialLink, SocialPlatform } from '@/components/socialIcons';
 
-const PAYLOAD_URL = process.env.NEXT_PUBLIC_PAYLOAD_URL || 'http://localhost:5000';
+const PAYLOAD_URL = process.env.NEXT_PUBLIC_PAYLOAD_URL || 'http://localhost:4631';
 const PAYLOAD_API_KEY = process.env.PAYLOAD_API_KEY;
 
 // Server-only auth header. Never expose PAYLOAD_API_KEY to the browser.

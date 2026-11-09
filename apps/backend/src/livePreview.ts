@@ -1,7 +1,7 @@
 import type { LivePreviewConfig } from 'payload'
 
 // The public site (Next.js). Override with WEBSITE_URL in production.
-export const WEBSITE_URL = process.env.WEBSITE_URL || 'http://localhost:5001'
+export const WEBSITE_URL = process.env.WEBSITE_URL || 'http://localhost:4630'
 
 // Maps a collection slug to the front-end detail route for a given document.
 // `team-members` is keyed by its numeric `memberId` (the route uses Number(id));

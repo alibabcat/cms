@@ -40,13 +40,13 @@ const nextConfig: NextConfig = {
         {
           protocol: 'http',
           hostname: 'localhost',
-          port: '5000',
+          port: '4631',
           pathname: '/**',
         },
         {
           protocol: 'http',
           hostname: 'localhost',
-          port: '5001',
+          port: '4630',
           pathname: '/**',
         },
       ],
